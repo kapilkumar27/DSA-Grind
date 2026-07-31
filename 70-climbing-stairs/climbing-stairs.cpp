@@ -1,13 +1,22 @@
 class Solution {
 public:
-    int climbStairs(int n) {
-        int prev2=1; //dp[0]
-        int prev1=1; //dp[1]
-        for(int i=2;i<=n;i++){
-            int curr=prev1+prev2;
-            prev2=prev1;
-            prev1=curr;
+    vector<int> dp;
+
+    int helper(int sum){
+        if(sum==0){
+            return 1;
         }
-        return prev1;
+        if(sum<0){
+            return 0;
+        }
+        if(dp[sum]!=-1){
+            return dp[sum];
+        }
+        return dp[sum]=helper(sum-1)+helper(sum-2);
+    }
+    
+    int climbStairs(int n) {
+        dp.assign(n+1,-1);
+        return helper(n);
     }
 };
